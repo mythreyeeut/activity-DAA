@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class Main {
+    static List<List<Integer>> result = new ArrayList<>();
+
+    static void generate(int[] nums, boolean[] used,
+                         List<Integer> current) {
+        if (current.size() == nums.length) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (!used[i]) {
+                used[i] = true;
+                current.add(nums[i]);
+
+                generate(nums, used, current);
+
+                current.remove(current.size() - 1);
+                used[i] = false;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        generate(nums, new boolean[nums.length],
+                 new ArrayList<>());
+        System.out.println(result);
+    }
+}
